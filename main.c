@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
-
+//CAMBIO!!!
 void PlotSquare(int x, int y, int size);
 void GenerateParameters(int maze_columns);
 void GeneratePath();
