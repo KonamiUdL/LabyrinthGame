@@ -17,11 +17,11 @@ const int TIMERMSECS = 100;
 int move_v =1;
 int move_h = 1;
 
-int wind_size_x;
-int wind_size_y;
+int wind_size_x = 0;
+int wind_size_y = 0;
 
-int hor_point_number;
-int ver_point_number;
+int hor_point_number = 0;
+int ver_point_number = 0;
 
 int size = 0;
 
@@ -116,7 +116,7 @@ void GenerateParameters(int maze_columns)
     for(s=0, i=0; i<ver_point_number; i++)
     {
 
-      ver_points[i] = s+(size/2);
+      ver_points[i] = s+round(size/2);
 
       s=s+size;
     }
@@ -152,7 +152,7 @@ void GenerateMaze(int maze_columns)
     //pintamos esqueleto aleatoriamente
     int num1;
     int num2;
-    int i;
+    int i=0;
     while (i < 100000){
       
       if (paint_points[h+1][v] != 0 && paint_points[h-1][v] != 0)

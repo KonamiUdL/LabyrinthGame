@@ -9,19 +9,19 @@ CND_DISTDIR=dist
 # Debug configuration
 CND_PLATFORM_Debug=GNU-Linux-x86
 CND_ARTIFACT_DIR_Debug=dist/Debug/GNU-Linux-x86
-CND_ARTIFACT_NAME_Debug=activity2
-CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux-x86/activity2
+CND_ARTIFACT_NAME_Debug=labyrinthgame
+CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux-x86/labyrinthgame
 CND_PACKAGE_DIR_Debug=dist/Debug/GNU-Linux-x86/package
-CND_PACKAGE_NAME_Debug=activity2.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux-x86/package/activity2.tar
+CND_PACKAGE_NAME_Debug=labyrinthgame.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux-x86/package/labyrinthgame.tar
 # Release configuration
 CND_PLATFORM_Release=GNU-Linux-x86
 CND_ARTIFACT_DIR_Release=dist/Release/GNU-Linux-x86
-CND_ARTIFACT_NAME_Release=activity2
-CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux-x86/activity2
+CND_ARTIFACT_NAME_Release=labyrinthgame
+CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux-x86/labyrinthgame
 CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux-x86/package
-CND_PACKAGE_NAME_Release=activity2.tar
-CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux-x86/package/activity2.tar
+CND_PACKAGE_NAME_Release=labyrinthgame.tar
+CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux-x86/package/labyrinthgame.tar
 #
 # include compiler specific variables
 #

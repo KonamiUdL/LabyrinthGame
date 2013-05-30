@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=activity2
+PROJECTNAME=LabyrinthGame
 
 # Active Configuration
 DEFAULTCONF=Debug
