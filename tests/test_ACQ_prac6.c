@@ -52,7 +52,7 @@ void test2() {
 void test3() {
 
     wind_size_x = 600;
-    wind_size_y = 500;
+    wind_size_y = 500; 
     hor_point_number = 0;
     ver_point_number = 0;
     num_columns = 40;
