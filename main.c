@@ -3,9 +3,12 @@
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
-//CAMBIO!!!
-void PlotSquare(int x, int y, int size);
-void GenerateParameters(int maze_columns);
+
+#include "/home/zem/local/include/CUnit/CUnit.h";
+#include "/home/zem/local/include/CUnit/Basic.h";
+
+int PlotSquare(int x, int y, double size);
+int GenerateParameters(int maze_columns);
 void GeneratePath();
 void GenerateMaze();
 void DrawMaze();
@@ -90,7 +93,7 @@ void animate(){
 }
 
 /*******************************************************/
-void GenerateParameters(int maze_columns)
+int GenerateParameters(int maze_columns)
 {
 
     size = round(wind_size_x/maze_columns);
@@ -121,7 +124,7 @@ void GenerateParameters(int maze_columns)
       s=s+size;
     }
 
-
+    return size;
 }
 
 /*******************************************************/
@@ -303,10 +306,10 @@ void Move()
 }
 
 /*******************************************************/
-void PlotSquare(int x, int y, int sq_size)
+int PlotSquare(int x, int y, double sq_size)
 {
     //pintamos un cuadrado en las posicion x, y con tamaño sq_size
-    sq_size = round(sq_size/2);
+    sq_size = ceil(sq_size/2);
 
     glPushMatrix();
 
@@ -322,4 +325,5 @@ void PlotSquare(int x, int y, int sq_size)
 
     glPopMatrix();
 
+    return sq_size;
 };
