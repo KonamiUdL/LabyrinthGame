@@ -4,9 +4,6 @@
 #include <math.h>
 #include <string.h>
 
-#include "/home/zem/local/include/CUnit/CUnit.h";
-#include "/home/zem/local/include/CUnit/Basic.h";
-
 int PlotSquare(int x, int y, double size);
 int GenerateParameters(int maze_columns);
 void GeneratePath();
