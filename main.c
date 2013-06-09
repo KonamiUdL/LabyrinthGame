@@ -261,24 +261,24 @@ void DrawMaze()
       for(v = 0; v<ver_point_number; v++)
       {
 
-        if(paint_points[h][v] == WALL){ //pared
+        if(paint_points[h][v] == WALL){ 
           glColor3f(0,0,1.0);
           PlotSquare(hor_points[h], ver_points[v], size);
         }
-        if(paint_points[h][v] == PATH){ //camino
+        if(paint_points[h][v] == PATH){ 
           glColor3f(0,1.0,0);
           PlotSquare(hor_points[h], ver_points[v], size);
         }
-        if(paint_points[h][v] == ANIMATION){ //animacion
+        if(paint_points[h][v] == ANIMATION){ 
           glColor3f(0,0,0);
           paint_points[h][v] = 2;
           PlotSquare(hor_points[h], ver_points[v], size);
         }
-        if(paint_points[h][v] == EDGE){ //bordes
+        if(paint_points[h][v] == EDGE){ 
           glColor3f(1.0,0,0);
           PlotSquare(hor_points[h], ver_points[v], size);
         }
-        if(paint_points[h][v] == EMPTY){ //vacio
+        if(paint_points[h][v] == EMPTY){ 
           glColor3f(1.0,1.0,1.0);
           PlotSquare(hor_points[h], ver_points[v], size);
         }
@@ -354,10 +354,10 @@ int PlotSquare(int x, int y, double sq_size)
 
     glBegin(GL_QUADS); // Start drawing a quad primitive  
 
-    glVertex2f(bottom_left.h, bottom_left.v); // The bottom left corner  
-    glVertex2f(top_left.h, top_left.v); // The top left corner  
-    glVertex2f(top_right.h, top_right.v); // The top right corner  
-    glVertex2f(bottom_right.h, bottom_right.v); // The bottom right corner  
+    glVertex2f(bottom_left.h, bottom_left.v);  
+    glVertex2f(top_left.h, top_left.v);  
+    glVertex2f(top_right.h, top_right.v); 
+    glVertex2f(bottom_right.h, bottom_right.v);  
     glEnd(); 
 
     glPopMatrix();
