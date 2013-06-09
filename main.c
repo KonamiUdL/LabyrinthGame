@@ -4,8 +4,8 @@
 #include <math.h>
 #include <string.h>
 
-#include "/home/zem/local/include/CUnit/CUnit.h";
-#include "/home/zem/local/include/CUnit/Basic.h";
+//#include "/home/zem/local/include/CUnit/CUnit.h";
+//#include "/home/zem/local/include/CUnit/Basic.h";
 
 int PlotSquare(int x, int y, double size);
 int GenerateParameters(int maze_columns);
@@ -24,7 +24,6 @@ struct point {
     int h;
     int v;
 };
-
 
 const int EMPTY = 0;
 const int WALL = 1;
