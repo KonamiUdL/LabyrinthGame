@@ -4,8 +4,8 @@
 #include <math.h>
 #include <string.h>
 
-#include "/home/zem/local/include/CUnit/CUnit.h";
-#include "/home/zem/local/include/CUnit/Basic.h";
+//#include "/home/zem/local/include/CUnit/CUnit.h";
+//#include "/home/zem/local/include/CUnit/Basic.h";
 
 int PlotSquare(int x, int y, double size);
 int GenerateParameters(int maze_columns);
@@ -14,8 +14,27 @@ void GenerateMaze();
 void DrawMaze();
 void animate();
 void Move();
+void FillWithWall();
+
+typedef int boolean;
+#define true 1
+#define false 0
+
+struct point {
+    int h;
+    int v;
+};
+
+const int EMPTY = 0;
+const int WALL = 1;
+const int PATH = 2;
+const int EDGE = 3;
+const int ANIMATION = 4;
 
 const int TIMERMSECS = 100;
+
+const int wind_size = 600;
+const int maze_columns = 50;
 
 int move_v =1;
 int move_h = 1;
@@ -49,13 +68,7 @@ void display()
 /*******************************************************/
 int main(int argc, char **argv)
 {
-    //Resolucion ventana
-    int wind_size = 600;
-    
-    //numero columnas del laberinto
-    int maze_columns = 50;
-
-
+  
     wind_size_x = wind_size; 
     wind_size_y = wind_size;
 
@@ -69,6 +82,7 @@ int main(int argc, char **argv)
 
     GenerateParameters(maze_columns); //generamos parametros del laberinto segun resolucion de pantalla y num columnas
     
+    FillWithWall();
     GenerateMaze(); //creamos el laberinto aleatoriamente
 
     GeneratePath(); //creamos el camino aleatoriamente
@@ -106,31 +120,29 @@ int GenerateParameters(int maze_columns)
 
     //guardamos los puntos horizontales
     int i = 0;
-    int s = 0;
-    for(s=0, i=0; i<hor_point_number; i++)
+    int partialSize = 0;
+    for(partialSize=0, i=0; i<hor_point_number; i++)
     {
       
-      hor_points[i] = s+(size/2); //guardamos punto central
+      hor_points[i] = partialSize+(size/2); //guardamos punto central
 
-      s=s+size;
+      partialSize= partialSize+size;
     }
 
     //guardamos los puntos verticales
-    for(s=0, i=0; i<ver_point_number; i++)
+    for( partialSize=0, i=0; i<ver_point_number; i++)
     {
 
-      ver_points[i] = s+round(size/2);
+      ver_points[i] = partialSize+round(size/2);
 
-      s=s+size;
+      partialSize= partialSize+size;
     }
 
     return size;
 }
 
-/*******************************************************/
-void GenerateMaze(int maze_columns)
-{
-
+void FillWithWall(){
+    
     int v;
     int h;
 
@@ -139,35 +151,43 @@ void GenerateMaze(int maze_columns)
     {
       for(h = 0; h<hor_point_number; h++)
       {
-
-        if (h == 0 || h==hor_point_number-1 || v==0 || v==ver_point_number-1)
+          
+        boolean found_edge =  (h == 0 || h==hor_point_number-1 || v==0 || v==ver_point_number-1);
+        
+        if (found_edge)
         {
-          paint_points[h][v] = 3;
+          paint_points[h][v] = EDGE;
         }
         else{
-          paint_points[h][v] = 1;
+          paint_points[h][v] = WALL;
         }
         
         
       }
     }
+}
 
+/*******************************************************/
+void GenerateMaze()
+{
+
+    int v;
+    int h;
     //pintamos esqueleto aleatoriamente
-    int num1;
-    int num2;
+    int random_num1;
+    int random_num2;
     int i=0;
     while (i < 100000){
-      
-      if (paint_points[h+1][v] != 0 && paint_points[h-1][v] != 0)
+      boolean found_hor_edge =  paint_points[h+1][v] != 0 && paint_points[h-1][v] != 0;
+      if (found_hor_edge)
       {
-        
         if(paint_points[h][v] != 3){paint_points[h][v] = 0;}
         if(paint_points[h][v+1] != 3){paint_points[h][v+1] = 0;}
         if(paint_points[h][v-1] != 3){paint_points[h][v-1] = 0;}
         
       }
-
-      if (paint_points[h][v+1] != 0 && paint_points[h][v-1] != 0)
+      boolean found_ver_edge =  paint_points[h][v+1] != 0 && paint_points[h][v-1] != 0;
+      if (found_ver_edge)
       {
         
         if(paint_points[h][v] != 3){paint_points[h][v] = 0;}
@@ -176,24 +196,23 @@ void GenerateMaze(int maze_columns)
         
       }
 
-      
-      num1 = rand()%2;
-      num2 = rand()%2;
+      random_num1 = rand()%2;
+      random_num2 = rand()%2;
 
       if (h<hor_point_number){
-        h = h + num1;
+        h = h + random_num1;
       }
       if (v<ver_point_number){
-        v = v + num2;
+        v = v + random_num2;
       }
 
 
-      num1 = rand()%2;
-      num2 = rand()%2;
+      random_num1 = rand()%2;
+      random_num2 = rand()%2;
 
       if (h>1 && v>1){
-        h = h - num1;
-        v = v - num2;
+        h = h - random_num1;
+        v = v - random_num2;
       }
       
       i++;
@@ -209,22 +228,23 @@ void GeneratePath()
     //generamos camino aleatoriamente
     int h = 1;
     int v = 1;
-    int num1;
-    int num2;
+    int random_num1;
+    int random_num2;
 
-    paint_points[h][v] = 2;
-
-    while ( v<ver_point_number-1 && h<hor_point_number-1){
+    paint_points[h][v] = PATH;
+    boolean not_maze_end = (v<ver_point_number-1 && h<hor_point_number-1);
+    while (not_maze_end){
       
-      num1 = rand()%2;
-      if (num1 == 0){
+      random_num1 = rand()%2;
+      if (random_num1 == 0){
         h++;
       }
       else{
         v++;
       }
       
-      paint_points[h][v] = 2;
+      paint_points[h][v] = PATH;
+      not_maze_end = (v<ver_point_number-1 && h<hor_point_number-1);
     }
 }
     
@@ -240,25 +260,25 @@ void DrawMaze()
     {
       for(v = 0; v<ver_point_number; v++)
       {
-        
-        if(paint_points[h][v] == 1){ //pared
+
+        if(paint_points[h][v] == WALL){ //pared
           glColor3f(0,0,1.0);
           PlotSquare(hor_points[h], ver_points[v], size);
         }
-        if(paint_points[h][v] == 2){ //camino
+        if(paint_points[h][v] == PATH){ //camino
           glColor3f(0,1.0,0);
           PlotSquare(hor_points[h], ver_points[v], size);
         }
-        if(paint_points[h][v] == 4){ //animacion
+        if(paint_points[h][v] == ANIMATION){ //animacion
           glColor3f(0,0,0);
           paint_points[h][v] = 2;
           PlotSquare(hor_points[h], ver_points[v], size);
         }
-        if(paint_points[h][v] == 3){ //bordes
+        if(paint_points[h][v] == EDGE){ //bordes
           glColor3f(1.0,0,0);
           PlotSquare(hor_points[h], ver_points[v], size);
         }
-        if(paint_points[h][v] == 0){ //vacio
+        if(paint_points[h][v] == EMPTY){ //vacio
           glColor3f(1.0,1.0,1.0);
           PlotSquare(hor_points[h], ver_points[v], size);
         }
@@ -280,14 +300,14 @@ void Move()
     {
       for(h = move_h; h<hor_point_number; h)
       {
-        
-        if (h==hor_point_number-1 && v==ver_point_number-1)
+        boolean maze_end = (h==hor_point_number-1 && v==ver_point_number-1);
+        if (maze_end)
         {
           return;
         }
         else{
           if (paint_points[h][v] == 2){
-            paint_points[h][v] = 4;
+            paint_points[h][v] = ANIMATION;
             h++;
             move_h = h;
             move_v = v;
@@ -311,16 +331,33 @@ int PlotSquare(int x, int y, double sq_size)
     //pintamos un cuadrado en las posicion x, y con tamaño sq_size
     sq_size = ceil(sq_size/2);
 
+    struct point bottom_left;
+    struct point top_left;
+    struct point top_right;
+    struct point bottom_right;
+    
+    bottom_left.h = -sq_size;
+    bottom_left.v = -sq_size;
+    
+    top_left.h = -sq_size;
+    top_left.v = sq_size;
+    
+    top_right.h = sq_size;
+    top_right.v = sq_size;
+    
+    bottom_right.h = sq_size;
+    bottom_right.v = -sq_size;
+    
     glPushMatrix();
 
     glTranslatef(x, y, 0);
 
     glBegin(GL_QUADS); // Start drawing a quad primitive  
 
-    glVertex2f(-sq_size, -sq_size); // The bottom left corner  
-    glVertex2f(-sq_size, sq_size); // The top left corner  
-    glVertex2f(sq_size, sq_size); // The top right corner  
-    glVertex2f(sq_size, -sq_size); // The bottom right corner  
+    glVertex2f(bottom_left.h, bottom_left.v); // The bottom left corner  
+    glVertex2f(top_left.h, top_left.v); // The top left corner  
+    glVertex2f(top_right.h, top_right.v); // The top right corner  
+    glVertex2f(bottom_right.h, bottom_right.v); // The bottom right corner  
     glEnd(); 
 
     glPopMatrix();
